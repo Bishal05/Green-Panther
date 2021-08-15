@@ -1,5 +1,6 @@
 {
   "name": "greenpanther",
+  "homepage": "https://priyanshi-2508.github.io/Green_Panthor",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -38,5 +39,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

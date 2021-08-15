@@ -1,25 +1,39 @@
 import axios from 'axios';
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import "../css/leaderboard.css"
 
 function LeaderBoard() {
 
-    let[user,setUser]=useState({});
+    let[user,setUser]=useState([]);
     const userData=[];
 
-    const getAllUsers=()=>{
+
+    useEffect(() => {
         axios.get('http://localhost:5000/api/leaderboard')
         .then((response)=>{
             console.log(response.data.user);
-            userData.push(response.data.user);
-            // console.log(user);
-            setUser(userData);
+            setUser(response.data.user);
             console.log(user +"hello");
 
         })
         .catch((error)=>{
             console.log(error);
         })
+        console.log(user);
+    }, [])
+    const getAllUsers=()=>{
+        // axios.get('http://localhost:5000/api/leaderboard')
+        // .then((response)=>{
+        //     console.log(response.data.user);
+        //     userData.push(response.data.user);
+        //     // console.log(user);
+        //     setUser(userData);
+        //     console.log(user +"hello");
+
+        // })
+        // .catch((error)=>{
+        //     console.log(error);
+        // })
     }
     return (
 
@@ -35,10 +49,15 @@ function LeaderBoard() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">Priyanshi Khandelwal</th>
-                        <td>120</td>
-                    </tr>
+                    {user.map((user)=>{
+                        return(
+                            <tr>
+                                <th scope="row">{user.name}</th>
+                                <td>{user.coins}</td>
+                            </tr>
+
+                        )
+                    })} 
                     <tr>
                         <th scope="row">Harshita Patil</th>
                         <td>118</td>
@@ -53,11 +72,11 @@ function LeaderBoard() {
                     </tr>
                 </tbody>
             </table>
-            {
+            {/* {
             (function(){
                 getAllUsers();
             })()
-            }
+            } */}
         </div>
     )
 }

@@ -19,6 +19,7 @@ const signup= async(req,res)=>{
     try {
         const isUser=await User.findOne({email});
         if(isUser){
+            console.log(isUser);
             return res.status(400).json({
                 message:"User already exsist"
             })
@@ -31,7 +32,7 @@ const signup= async(req,res)=>{
         const token=await generateToken(user);
         user.password=undefined;
         res.cookie('token', token,{maxAge:1000*60*60*24,httpOnly:true});
-        res.status(200).json({
+        return res.status(200).json({
             message:"User registered successfully",
             user,
             token
@@ -43,9 +44,9 @@ const signup= async(req,res)=>{
         })
     }
 }
-
 const generateToken=async(user)=>{
-    const token=await jwt.sign(({_id:user._id.toString()}),process.env.SECRET_KEY);
+    // console.log(user,"49");
+    const token=await jwt.sign(({_id:user._id.toString()}),"newuser");
     return token;
 }
 
@@ -53,6 +54,7 @@ const signin=async (req,res)=>{
 
     const errors=validationResult(req);
     if(!errors.isEmpty()){
+        console.log(errors);
         return res.status(422).json({
             error:errors.array()[0].msg
         })
@@ -60,25 +62,27 @@ const signin=async (req,res)=>{
 
     const {email,password}=req.body;
     try {
-        const user=await findByCredentials(email,password);
+        const user=await findByCredentials(email,password,res);
         const token=await generateToken(user);
         user.password=undefined;
         res.cookie('token', token,{maxAge:1000*60*60*24,httpOnly:true});
-        res.status(200).json({
+        return res.status(200).json({
             message:"User signined successfully",
             user,
             token
         })
     } catch (error) {
+        console.log(error);
         res.status(400).json({
             error:"Something went wrong"
         })
     }
 }
 
-const findByCredentials=async (email,password)=>{
+const findByCredentials=async (email,password,res)=>{
     try {
         const user=await User.findOne({email});
+        console.log(user,"86")
         if(!user){
             return res.json(400).status({
                 message:"Email invalid"
@@ -86,12 +90,13 @@ const findByCredentials=async (email,password)=>{
         }
 
         const isMatch=await bcrypt.compare(password,user.password);
+        console.log("94",isMatch);
         if(!isMatch){
             return res.status(401).json({
                 messgae:"Password is incorrect"
             })
         }
-
+        console.log("98");
         return user;
     } catch (error) {
         return res.status(401).json({

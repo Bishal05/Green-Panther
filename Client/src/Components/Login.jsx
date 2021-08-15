@@ -21,7 +21,7 @@ function Login() {
         }
     }
 
-    const handelSubmit=async (e)=>{
+    const handelSubmit=(e)=>{
         e.preventDefault();
         try {
             const userObject = {
@@ -39,10 +39,10 @@ function Login() {
                 console.log(user._id);
                 const userId=user._id;
                 localStorage.setItem("userId", userId);
-
+                
             }).catch((error)=>console.log(error));
+            
             console.log("user signined");
-
             setEmail("");
             setPassword("");    
         } catch (error) {
@@ -56,7 +56,7 @@ function Login() {
                 <form>
                     <input className="input-email" type="email"  placeholder="Enter Email" value={email} onChange={handelInput}/>
                     <input className="input-password" type="password" placeholder="Enter Password" value={password} onChange={handelInput}/>
-                    <input type="submit" value="Sign In" onClick={handelSubmit}/>
+                    <input type="submit" value="Login In" onClick={handelSubmit}/>
                 </form>
             </div>
     )

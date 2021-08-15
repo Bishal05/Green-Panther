@@ -52,7 +52,7 @@ function Signup() {
         <>
             <div class="loginBox" style={{alignItems: "center"}}>
                 <img class="user" src={userImage}/>
-                <h2>Log In Here</h2>
+                <h2>Signup Here</h2>
                 <form>
                     <input className="input-name" type="text"  placeholder="Enter Name" value={name} onChange={handelInput}/>
                     <input className="input-email" type="email"  placeholder="Enter Email" value={email} onChange={handelInput}/>
