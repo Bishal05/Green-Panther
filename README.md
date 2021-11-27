@@ -1,4 +1,4 @@
-# Green-Panthor
+# Green-Panther
 
 It is a website built by me and my friends to create awareness among people to save fossil fuels (Petrol/Diesel). The idea behind is to make a game like a website which encourage people to use a vehicle which requires less fuel like buses, taxies or they can go to the office using bicycles or by walk even.
 
